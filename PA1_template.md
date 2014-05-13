@@ -231,4 +231,3 @@ xyplot(newmeans ~ interval | newdata$wknd, type = "l", xlab = "Interval", ylab =
 
 
 it appears that the number of steps taken on weekdays and weekends are similar in shape, but the weekday distribution is much noisier.
-etween weekdays and weekends?
