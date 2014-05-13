@@ -15,14 +15,6 @@ First, the working directory path must be properly set in RStudio (?setwd). Then
 data <- read.csv("activity.csv")
 ```
 
-```
-## Warning: cannot open file 'activity.csv': No such file or directory
-```
-
-```
-## Error: cannot open the connection
-```
-
 
 and take a quick peek at the contents and organization of the data.
 
@@ -31,13 +23,13 @@ head(data)
 ```
 
 ```
-##                                                                      
-## 1 function (..., list = character(), package = NULL, lib.loc = NULL, 
-## 2     verbose = getOption("verbose"), envir = .GlobalEnv)            
-## 3 {                                                                  
-## 4     fileExt <- function(x) {                                       
-## 5         db <- grepl("\\\\.[^.]+\\\\.(gz|bz2|xz)$", x)              
-## 6         ans <- sub(".*\\\\.", "", x)
+##   steps       date interval
+## 1    NA 2012-10-01        0
+## 2    NA 2012-10-01        5
+## 3    NA 2012-10-01       10
+## 4    NA 2012-10-01       15
+## 5    NA 2012-10-01       20
+## 6    NA 2012-10-01       25
 ```
 
 
@@ -51,10 +43,6 @@ The variable "step" shown above is the number of steps taken for each 5 minute "
 nsteps <- na.omit(data[, "steps"])
 ```
 
-```
-## Error: object of type 'closure' is not subsettable
-```
-
 
 The distribution
 
@@ -62,9 +50,7 @@ The distribution
 hist(nsteps)
 ```
 
-```
-## Error: object 'nsteps' not found
-```
+![plot of chunk unnamed-chunk-4](figure/unnamed-chunk-4.png) 
 
 mean 
 
@@ -73,7 +59,7 @@ mean(nsteps)
 ```
 
 ```
-## Error: object 'nsteps' not found
+## [1] 37.38
 ```
 
 and median 
@@ -83,7 +69,7 @@ median(nsteps)
 ```
 
 ```
-## Error: object 'nsteps' not found
+## [1] 0
 ```
 
 of the number of steps taken provide an initial description of the data.
@@ -95,26 +81,8 @@ Calculate the mean number of steps taken during each 5 minute interval throughou
 
 ```r
 x <- split(data, data$interval)
-```
-
-```
-## Error: object of type 'closure' is not subsettable
-```
-
-```r
 means <- unlist(lapply(x, function(x) y <- mean(x$steps, na.rm = TRUE)))
-```
-
-```
-## Error: object 'x' not found
-```
-
-```r
 interval <- as.numeric(names(means))
-```
-
-```
-## Error: object 'means' not found
 ```
 
 
@@ -124,9 +92,7 @@ and plot the means versus the intervals
 plot(interval, means, type = "l")
 ```
 
-```
-## Error: object 'interval' not found
-```
+![plot of chunk unnamed-chunk-8](figure/unnamed-chunk-8.png) 
 
 
 One can then determine the interval during which the greatest mean number of steps was taken.
@@ -136,7 +102,8 @@ which.max(means)
 ```
 
 ```
-## Error: object 'means' not found
+## 835 
+## 104
 ```
 
 
@@ -151,7 +118,7 @@ sum(!complete.cases(data$steps))
 ```
 
 ```
-## Error: object of type 'closure' is not subsettable
+## [1] 2304
 ```
 
 
@@ -164,10 +131,6 @@ newdata <- do.call(rbind, lapply(x, function(x) {
 }))
 ```
 
-```
-## Error: object 'x' not found
-```
-
 
 When one compares the distribution, mean, and median to that of the sanitized data
 
@@ -175,16 +138,14 @@ When one compares the distribution, mean, and median to that of the sanitized da
 hist(newdata$steps)
 ```
 
-```
-## Error: object 'newdata' not found
-```
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
 
 ```r
 mean(newdata$steps)
 ```
 
 ```
-## Error: object 'newdata' not found
+## [1] 37.38
 ```
 
 ```r
@@ -192,7 +153,7 @@ median(newdata$steps)
 ```
 
 ```
-## Error: object 'newdata' not found
+## [1] 0
 ```
 
 
@@ -204,7 +165,8 @@ summary(nsteps)
 ```
 
 ```
-## Error: object 'nsteps' not found
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0     0.0     0.0    37.4    12.0   806.0
 ```
 
 ```r
@@ -212,7 +174,8 @@ summary(newdata$steps)
 ```
 
 ```
-## Error: object 'newdata' not found
+##    Min. 1st Qu.  Median    Mean 3rd Qu.    Max. 
+##     0.0     0.0     0.0    37.4    27.0   806.0
 ```
 
 ```r
@@ -220,7 +183,7 @@ sd(nsteps)
 ```
 
 ```
-## Error: object 'nsteps' not found
+## [1] 112
 ```
 
 ```r
@@ -228,7 +191,7 @@ sd(newdata$steps)
 ```
 
 ```
-## Error: object 'newdata' not found
+## [1] 105.3
 ```
 
 
@@ -241,34 +204,9 @@ One can also compare the number of steps taken on weekdays to the number taken o
 
 ```r
 newdata$days <- weekdays(as.POSIXct(newdata$date))
-```
-
-```
-## Error: object 'newdata' not found
-```
-
-```r
 newdata$wknd <- newdata$days == "Sunday" | newdata$days == "Saturday"
-```
-
-```
-## Error: object 'newdata' not found
-```
-
-```r
 newdata$wknd <- as.factor(newdata$wknd)
-```
-
-```
-## Error: object 'newdata' not found
-```
-
-```r
 levels(newdata$wknd) = c("weekday", "weekend")
-```
-
-```
-## Error: object 'newdata' not found
 ```
 
 
@@ -276,18 +214,7 @@ As before, the means of the number of steps taken by interval for the imputed da
 
 ```r
 x <- split(newdata, newdata$interval)
-```
-
-```
-## Error: object 'newdata' not found
-```
-
-```r
 newmeans <- unlist(lapply(x, function(x) y <- mean(x$steps, na.rm = TRUE)))
-```
-
-```
-## Error: object 'x' not found
 ```
 
 
@@ -300,9 +227,7 @@ xyplot(newmeans ~ interval | newdata$wknd, type = "l", xlab = "Interval", ylab =
     layout = c(1, 2))
 ```
 
-```
-## Error: object 'newdata' not found
-```
+![plot of chunk unnamed-chunk-16](figure/unnamed-chunk-16.png) 
 
 
 it appears that the number of steps taken on weekdays and weekends are similar in shape, but the weekday distribution is much noisier.
